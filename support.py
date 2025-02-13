@@ -414,3 +414,19 @@ def meraSunburst(df=None, height=None, width=None):
     fig.update_layout(margin=dict(l=1, r=1, t=1, b=1), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
     fig.update(layout_showlegend=False)
     return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+def calculate_total(expenses):
+    return sum(expense.amount for expense in expenses)
+
+def format_currency(amount):
+    return f"R{amount:.2f}"
+
+def get_category_totals(expenses):
+    categories = {}
+    for expense in expenses:
+        if expense.category in categories:
+            categories[expense.category] += expense.amount
+        else:
+            categories[expense.category] = expense.amount
+    return categories

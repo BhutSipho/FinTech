@@ -38,3 +38,11 @@ Plotly.newPlot('myDiv', data, layout, config );
 $(document).ready(function(){
     $(".multi_select").selectpicker();
 })
+
+document.getElementById('stockSelect').addEventListener('change', function() {
+    document.getElementById('newStockItem').disabled = this.value !== '';
+});
+
+document.getElementById('newStockItem').addEventListener('input', function() {
+    document.getElementById('stockSelect').disabled = this.value !== '';
+});

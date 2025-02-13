@@ -7,12 +7,26 @@ import plotly.express as px
 import json
 import warnings
 import support
+from flask_sqlalchemy import SQLAlchemy
 
 warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
+class Expense(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(100), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    category = db.Column(db.String(50))
+    date = db.Column(db.Date, nullable=False)
+
+# Create database tables
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def login():
@@ -121,72 +135,8 @@ def feedback():
 
 @app.route('/home')
 def home():
-    if 'user_id' in session:  # if user is logged-in
-        query = """select * from user_login where user_id = {} """.format(session['user_id'])
-        userdata = support.execute_query("search", query)
-
-        table_query = """select * from user_expenses where user_id = {} order by pdate desc""".format(
-            session['user_id'])
-        table_data = support.execute_query("search", table_query)
-        df = pd.DataFrame(table_data, columns=['#', 'User_Id', 'Date', 'Expense', 'Amount', 'Note'])
-
-        df = support.generate_df(df)
-        try:
-            earning, spend, invest, saving = support.top_tiles(df)
-        except:
-            earning, spend, invest, saving = 0, 0, 0, 0
-
-        try:
-            bar, pie, line, stack_bar = support.generate_Graph(df)
-        except:
-            bar, pie, line, stack_bar = None, None, None, None
-        try:
-            monthly_data = support.get_monthly_data(df, res=None)
-        except:
-            monthly_data = []
-        try:
-            card_data = support.sort_summary(df)
-        except:
-            card_data = []
-
-        try:
-            goals = support.expense_goal(df)
-        except:
-            goals = []
-        try:
-            size = 240
-            pie1 = support.makePieChart(df, 'Earning', 'Month_name', size=size)
-            pie2 = support.makePieChart(df, 'Spend', 'Day_name', size=size)
-            pie3 = support.makePieChart(df, 'Investment', 'Year', size=size)
-            pie4 = support.makePieChart(df, 'Saving', 'Note', size=size)
-            pie5 = support.makePieChart(df, 'Saving', 'Day_name', size=size)
-            pie6 = support.makePieChart(df, 'Investment', 'Note', size=size)
-        except:
-            pie1, pie2, pie3, pie4, pie5, pie6 = None, None, None, None, None, None
-        return render_template('home.html',
-                               user_name=userdata[0][1],
-                               df_size=df.shape[0],
-                               df=jsonify(df.to_json()),
-                               earning=earning,
-                               spend=spend,
-                               invest=invest,
-                               saving=saving,
-                               monthly_data=monthly_data,
-                               card_data=card_data,
-                               goals=goals,
-                               table_data=table_data[:4],
-                               bar=bar,
-                               line=line,
-                               stack_bar=stack_bar,
-                               pie1=pie1,
-                               pie2=pie2,
-                               pie3=pie3,
-                               pie4=pie4,
-                               pie5=pie5,
-                               pie6=pie6,
-                               )
-    else:  # if not logged-in
-        return redirect('/')
+    expenses = Expense.query.all()
+    return render_template('home.html', expenses=expenses)
 
 
 @app.route('/home/add_expense', methods=['POST'])
