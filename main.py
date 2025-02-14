@@ -26,10 +26,12 @@ class Expense(db.Model):
 
 class StockItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.Integer, default=0)
     purchase_price = db.Column(db.Float)
     sale_price = db.Column(db.Float)
+    last_purchase_date = db.Column(db.DateTime)
+    last_sale_date = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # Create database tables
@@ -305,3 +307,42 @@ def about():
 
 if __name__ == "__main__":
     app.run(debug=True)
+<div class="card-body">
+                                <form id="stockForm" method="post" action="/add_stock">
+                                    <div class="mb-3">
+                                        <label class="form-label">Stock Item</label>
+                                        <select class="form-select" name="stock_item" required="">
+                                            <option value="">Select or add new...</option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Purchase Date</label>
+                                            <input type="date" class="form-control" name="purchase_date" required="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Purchase Price (R)</label>
+                                            <input type="number" step="0.01" class="form-control" name="purchase_price" required="">
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-2 mt-2">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Sale Date</label>
+                                            <input type="date" class="form-control" name="sale_date">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Sale Price (R)</label>
+                                            <input type="number" step="0.01" class="form-control" name="sale_price">
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <button type="submit" class="btn btn-success w-100">
+                                            <i class="bi bi-save"></i> Record Transaction
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
