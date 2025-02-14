@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Expensify Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Fixed sidebar matching home.html lines 19-28 -->
+    <div class="sidebar">
+        <div class="sidebar-header">Expensify Tracker</div>
+        <ul class="nav-links">
+            <li><a href="/home"><i class="bi bi-house"></i> Home</a></li>
+            <li><a href="/analysis"><i class="bi bi-graph-up"></i> Analysis</a></li>
+            <li><a href="/profile"><i class="bi bi-person-circle"></i> Profile</a></li>
+            <li><a href="/contact"><i class="bi bi-envelope"></i> Contact</a></li>
+            <li><a href="/about" class="active"><i class="bi bi-info-circle"></i> About</a></li>
+            <li><a href="/logout" class="text-warning"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content area aligned with sidebar -->
+    <main class="main-content">
+        <div class="container-fluid pt-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="bi bi-building me-2"></i>About Expensify Tracker</h3>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Who We Are Section -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h4 class="text-primary"><i class="bi bi-people me-2"></i>Who We Are</h4>
+                            <p class="lead">
+                                Expensify Tracker is a powerful financial management platform designed for businesses 
+                                to track stock expenses, sales, and profitability. Our solution helps both small 
+                                businesses and financial analysts make data-driven decisions.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-primary h-100">
+                                <div class="card-body">
+                                    <h5 class="text-primary"><i class="bi bi-lightning-charge me-2"></i>Key Stats</h5>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="bi bi-graph-up-arrow text-success me-2"></i>
+                                            500+ Active Businesses
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-cash-coin text-success me-2"></i>
+                                            R10M+ Tracked Monthly
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-shield-check text-success me-2"></i>
+                                            99.9% Uptime
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- What We Offer Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="text-primary mb-3"><i class="bi bi-clipboard2-check me-2"></i>What We Offer</h4>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="p-3 border rounded h-100">
+                                        <h5><i class="bi bi-cart-check text-primary me-2"></i>Stock Management</h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="bi bi-check2-circle text-success me-2"></i>
+                                                Purchase tracking with supplier details
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="bi bi-check2-circle text-success me-2"></i>
+                                                Real-time inventory monitoring
+                                            </li>
+                                            <li>
+                                                <i class="bi bi-check2-circle text-success me-2"></i>
+                                                Stock utilization analytics
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 border rounded h-100">
+                                        <h5><i class="bi bi-graph-up-arrow text-primary me-2"></i>Financial Insights</h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="bi bi-check2-circle text-success me-2"></i>
+                                                Profit/loss dashboards
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="bi bi-check2-circle text-success me-2"></i>
+                                                Sales revenue tracking
+                                            </li>
+                                            <li>
+                                                <i class="bi bi-check2-circle text-success me-2"></i>
+                                                Custom financial reports
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Why Choose Us Section -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light h-100">
+                                <div class="card-body">
+                                    <h4 class="text-primary"><i class="bi bi-patch-check me-2"></i>Why Choose Us?</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3">
+                                            <i class="bi bi-shield-lock text-primary me-2"></i>
+                                            <strong>Bank-Grade Security:</strong> Military-grade encryption for your data
+                                        </li>
+                                        <li class="mb-3">
+                                            <i class="bi bi-speedometer2 text-primary me-2"></i>
+                                            <strong>Real-Time Analytics:</strong> Instant financial insights
+                                        </li>
+                                        <li>
+                                            <i class="bi bi-phone text-primary me-2"></i>
+                                            <strong>Mobile Optimization:</strong> Manage on-the-go
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-info h-100">
+                                <h4 class="alert-heading"><i class="bi bi-bullseye me-2"></i>Our Mission</h4>
+                                <p>
+                                    Empower businesses with intuitive tools for smarter financial decisions 
+                                    and sustainable growth through accurate expense tracking and predictive analytics.
+                                </p>
+                                <hr>
+                                <p class="mb-0">
+                                    Committed to transforming stock management into a strategic business advantage.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer matching home.html structure -->
+    <footer class="app-footer mt-auto" style="padding: 8px 0; background-color: #495057; border-top: 2px solid #6c757d;">
+        <div class="container text-center">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-light" style="font-size: 0.85rem;">© 2024 Expensify Tracker</small>
+                <div class="social-links">
+                    <a href="#" class="social-icon mx-2" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="social-icon mx-2" aria-label="Twitter">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon mx-2" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon mx-2" aria-label="YouTube">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts matching other pages -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html> 

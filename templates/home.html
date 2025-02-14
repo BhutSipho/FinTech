@@ -23,6 +23,7 @@
                 <li><a href="/analysis"><i class="bi bi-graph-up"></i>Analysis</a></li>
                 <li><a href="/profile"><i class="bi bi-person-circle"></i>Profile</a></li>
                 <li><a href="/contact"><i class="bi bi-envelope"></i>Contact</a></li>
+                <li><a href="/about"><i class="bi bi-info-circle"></i>About</a></li>
                 <li><a href="/logout" class="text-warning"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
             </ul>
         </div>
@@ -54,7 +55,7 @@
                                 <h5 class="mb-0">Stock Transaction</h5>
                             </div>
                             <div class="card-body">
-                                <form id="stockForm" method="post">
+                                <form id="stockForm" method="post" action="/add_stock">
                                     <div class="mb-3">
                                         <label class="form-label">Stock Item</label>
                                         <select class="form-select" name="stock_item" required>
@@ -196,27 +197,6 @@
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="app-footer">
-            <div class="container text-center">
-                <small>© 2024 Expensify Tracker · Smart Financial Management</small>
-                <div class="social-links">
-                    <a href="#" class="social-icon" aria-label="Facebook">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Twitter">
-                        <i class="bi bi-twitter"></i>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Instagram">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="YouTube">
-                        <i class="bi bi-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </footer>
-
         <script type="text/javascript">
             setTimeout(function () {
                 // Closing the alert
@@ -262,5 +242,14 @@
             // Implementation for filtering
         }
         </script>
+
+        {% if low_stock %}
+        <div class="alert alert-warning">
+            Low stock alert for: 
+            {% for item in low_stock %}
+            <span class="badge bg-danger">{{ item.name }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
     </body>
 </html>

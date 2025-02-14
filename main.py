@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash, jsonify
 import os
-from datetime import timedelta  # used for setting session timeout
+from datetime import timedelta, datetime  # used for setting session timeout
 import pandas as pd
 import plotly
 import plotly.express as px
@@ -23,6 +23,14 @@ class Expense(db.Model):
     amount = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(50))
     date = db.Column(db.Date, nullable=False)
+
+class StockItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    quantity = db.Column(db.Integer, default=0)
+    purchase_price = db.Column(db.Float)
+    sale_price = db.Column(db.Float)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # Create database tables
 with app.app_context():
@@ -136,7 +144,13 @@ def feedback():
 @app.route('/home')
 def home():
     expenses = Expense.query.all()
-    return render_template('home.html', expenses=expenses)
+    stock_items = StockItem.query.all()
+    low_stock = [item for item in stock_items if item.quantity < 5]
+    return render_template('home.html',
+                         expenses=expenses,
+                         stock_items=stock_items,
+                         stock_data=stock_items,
+                         low_stock=low_stock)
 
 
 @app.route('/home/add_expense', methods=['POST'])
@@ -259,6 +273,34 @@ def logout():
         return redirect('/')
     except:  # if already logged-out but in another tab still logged-in
         return redirect('/')
+
+
+@app.route('/add_stock', methods=['POST'])
+def add_stock():
+    if request.method == 'POST':
+        stock_item = StockItem.query.filter_by(name=request.form['stock_item']).first()
+        
+        if not stock_item:
+            stock_item = StockItem(
+                name=request.form['stock_item'],
+                purchase_price=float(request.form['purchase_price']),
+                quantity=int(request.form.get('quantity', 0))
+            )
+        else:
+            stock_item.quantity += int(request.form.get('quantity', 0))
+            stock_item.purchase_price = float(request.form['purchase_price'])
+        
+        db.session.add(stock_item)
+        db.session.commit()
+        
+    return redirect('/home')
+
+
+@app.route('/about')
+def about():
+    if 'user_id' not in session:
+        return redirect('/')
+    return render_template('about.html')
 
 
 if __name__ == "__main__":
